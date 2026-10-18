@@ -75,7 +75,7 @@ public class BetterCombatTogglerClient {
             boolean currentState = CombatToggleState.isEnabled(mc.player);
             boolean newState = !currentState;
 
-            LOGGER.info("Toggle pressed: Better Combat enabled: {}", newState);
+            LOGGER.debug("Toggle pressed: Better Combat enabled: {}", newState);
 
             if (ModServerStatus.canSendPackets()) {
                 try {
