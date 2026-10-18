@@ -27,6 +27,6 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="bettercombat"
 mandatory=true
-versionRange="[1.0,)"
+versionRange="[1.9,)"
 ordering="AFTER"
 side="BOTH"

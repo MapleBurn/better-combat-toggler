@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.mapleburn.bettercombattoggler.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "bettercombattoggler.refmap.json",
+  "mixins": [
+    "PlayerAttackHelperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
