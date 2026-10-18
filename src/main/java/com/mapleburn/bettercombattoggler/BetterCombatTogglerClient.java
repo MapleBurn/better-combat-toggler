@@ -29,26 +29,16 @@ public class BetterCombatTogglerClient {
     }
     
     private static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        // Reset config load flag when player joins a world/server
-        // This ensures we reinitialize on each new server join
-        LOGGER.info("Player joined - resetting config load state");
         configLoaded = false;
     }
     
     private static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        // Reset the flag when player leaves so config loads again on next world join
         configLoaded = false;
-        // Reset server mod status
         ModServerStatus.reset();
     }
 
     private static void onRegisterKeys(RegisterKeyMappingsEvent event) {
-        TOGGLE_KEY = new KeyMapping(
-                "key.bettercombattoggler.toggle",
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_K,
-                "key.categories.bettercombattoggler"
-        );
+        TOGGLE_KEY = new KeyMapping("key.bettercombattoggler.toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "key.categories.bettercombattoggler");
         event.register(TOGGLE_KEY);
     }
 
@@ -63,10 +53,9 @@ public class BetterCombatTogglerClient {
             // Load the saved config state from file
             CombatTogglerConfig.loadConfig();
             boolean configState = CombatTogglerConfig.isCombatEnabled();
-            
-            LOGGER.info("=== PLAYER JOINED SERVER ===");
+
             LOGGER.info("Loading Better Combat state from config: {}", configState);
-            
+
             CombatToggleState.setClientState(mc.player.getUUID(), configState);
             net.bettercombat.client.BetterCombatClientMod.ENABLED = configState;
             
@@ -78,7 +67,7 @@ public class BetterCombatTogglerClient {
                 LOGGER.info("Sending sync packet to server with state: {}", configState);
                 PacketDistributor.sendToServer(new ToggleCombatPacket(mc.player.getUUID(), configState));
             } else {
-                LOGGER.info("Server doesn't have mod, skipping packet send");
+                LOGGER.info("Server-side mod not detected, skipping packet send");
             }
         }
 
@@ -86,34 +75,27 @@ public class BetterCombatTogglerClient {
             boolean currentState = CombatToggleState.isEnabled(mc.player);
             boolean newState = !currentState;
 
-            LOGGER.info("=== TOGGLE PRESSED ===");
-            LOGGER.info("Current state: {}, New state: {}", currentState, newState);
+            LOGGER.info("Toggle pressed: Better Combat enabled: {}", newState);
 
-            // 1. Request server to update state (only if server has the mod)
             if (ModServerStatus.canSendPackets()) {
                 try {
                     PacketDistributor.sendToServer(new ToggleCombatPacket(mc.player.getUUID(), newState));
-                    LOGGER.info("Sent toggle packet to server");
                 } catch (Exception e) {
                     LOGGER.error("Failed to send packet to server", e);
                     mc.player.displayClientMessage(
                         Component.literal("§cFailed to send toggle to server!"), true
                     );
-                    continue; // Don't update state if packet send fails
+                    continue;
                 }
-            } else {
-                LOGGER.info("Server doesn't have mod - using client-only mode");
             }
 
-            // 2. Update local state immediately for responsive UI
+            // Update local state immediately for responsive UI
             CombatToggleState.setClientState(mc.player.getUUID(), newState);
             CombatTogglerConfig.setCombatEnabled(newState);
             net.bettercombat.client.BetterCombatClientMod.ENABLED = newState;
             
-            // Enable sweep particles when vanilla combat is active (when newState is false)
-            // Better Combat blocks sweep particles by default, so we need to enable them for vanilla mode
+            // Enable sweep particles when vanilla combat is active
             net.bettercombat.client.BetterCombatClientMod.config.isSweepingParticleEnabled = !newState;
-            LOGGER.info("Setting BetterCombat sweep particles to: {}", !newState);
 
             // Show status with mode indicator
             String status = newState ? "§aEnabled" : "§cDisabled";

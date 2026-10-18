@@ -10,10 +10,8 @@ public record ToggleCombatPacket(UUID playerId, boolean enabled) implements Cust
     public static final CustomPacketPayload.Type<ToggleCombatPacket> TYPE = 
         new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("bettercombattoggler", "toggle_combat"));
     
-    public static final StreamCodec<RegistryFriendlyByteBuf, ToggleCombatPacket> STREAM_CODEC = StreamCodec.of(
-        ToggleCombatPacket::encode,
-        ToggleCombatPacket::decode
-    );
+    public static final StreamCodec<RegistryFriendlyByteBuf, ToggleCombatPacket> STREAM_CODEC =
+            StreamCodec.of(ToggleCombatPacket::encode, ToggleCombatPacket::decode);
 
     public static void encode(RegistryFriendlyByteBuf buf, ToggleCombatPacket packet) {
         buf.writeUUID(packet.playerId);

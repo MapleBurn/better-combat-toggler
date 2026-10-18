@@ -1,25 +1,24 @@
+# Better Combat Toggler
 
-Installation information
-=======
+Better Combat Toggler is an utility addon mod that allows you to quickly enable or disable the Better Combat mod with a keybind.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Features
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+
+&#x20;   Instant Toggle: Switch between Better Combat and vanilla-style combat without having to restart your game or open config menus.
+
+&#x20;   Customizable Keybind: Default key is set to 'K', but you can easily rebind it in the Minecraft controls menu.
+
+&#x20;   Client-server or purely client-Side: In order to bring back vanilla combat entirely, you have to install it on both client and server. In case it isn't on the server, you can still use the mod with limited functionality - some things like sword sweeping will be broken.
+
+
+
+#### Issues
+
+&#x20;   If you encounter any bugs either don't hesitate to leave a comment or open an issue on GitHub.
+
+
+

@@ -21,7 +21,7 @@ public class ModServerStatus {
      * This should be called when the payload handler confirms communication.
      */
     public static void setServerHasMod(boolean hasMod) {
-        LOGGER.info("Server mod status confirmed: {}", hasMod ? "present" : "absent");
+        //LOGGER.info("Server mod status confirmed: {}", hasMod ? "present" : "absent");
         serverHasMod = hasMod;
         statusConfirmed = true;
     }
@@ -53,14 +53,13 @@ public class ModServerStatus {
      * Resets the server status when disconnecting.
      */
     public static void reset() {
-        LOGGER.info("Resetting server mod status");
         serverHasMod = false;
         statusConfirmed = false;
     }
     
     /**
-     * Checks if we should send packets to the server.
-     * Only send if server has the mod or we're in singleplayer.
+     * Checks if the client should send packets to the server.
+     * Only send if server has the mod or the client is in singleplayer.
      */
     public static boolean canSendPackets() {
         boolean canSend = serverHasMod();
